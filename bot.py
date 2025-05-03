@@ -78,9 +78,6 @@ def gerar_template(produtos):
     template = Image.open(TEMPLATE_PATH).convert("RGBA")
     posicoes = [(97, 550), (535, 551), (97, 884), (535, 884), (97, 1218), (535, 1218)]
 
-
-    
-
     for i, produto in enumerate(produtos):
         url = produto["imageUrl"]
         response = requests.get(url)
@@ -115,11 +112,12 @@ def start(message):
     bot.send_message(chat_id, "🌳 *Melhores ofertas para você hoje!*", parse_mode="Markdown")
     bot.send_photo(chat_id, open(imagem_final, "rb"))
 
-    links = "🧾 *Produtos do Dia:*"
+    texto = "🧾 *Produtos do Dia:*"
     for i, p in enumerate(produtos, start=1):
-        links += f"\n🔹 PRODUTO {i} = `{p['itemId']}`"
+        nome_limpo = p['productName'].replace("`", "")
+        texto += f"\n🔹 PRODUTO {i} = `{nome_limpo}`"
 
-    bot.send_message(chat_id, links, parse_mode="Markdown")
+    bot.send_message(chat_id, texto, parse_mode="Markdown")
 
     usados = carregar_ids_usados()
     for p in produtos:
@@ -127,3 +125,4 @@ def start(message):
     salvar_ids_usados(usados)
 
 bot.infinity_polling()
+
