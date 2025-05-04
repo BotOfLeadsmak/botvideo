@@ -114,8 +114,7 @@ def start(message):
 
     texto = "🧾 *Produtos do Dia:*"
     for i, p in enumerate(produtos, start=1):
-        nome_limpo = p['productName'].replace("`", "")
-        texto += f"\n🔹 PRODUTO {i} = `{nome_limpo}`"
+        texto += f"\n🔹 PRODUTO {i} = {p['offerLink']}"
 
     bot.send_message(chat_id, texto, parse_mode="Markdown")
 
@@ -125,4 +124,3 @@ def start(message):
     salvar_ids_usados(usados)
 
 bot.infinity_polling()
-
